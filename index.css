@@ -3,20 +3,19 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #2b2d42; /*https://coolors.co/palette/2b2d42-8d99ae-edf2f4-ef233c-d90429*/
+  background-color: #011627; /*https://coolors.co/palette/011627-fdfffc-2ec4b6-e71d36-ff9f1c*/
   user-select: none;
 }
 /*home page*/
 .container {
+  max-width: 50vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 200px;
-  margin: 100px auto;
+  margin: auto;
   justify-content: center;
+  align-items: center;
   color: white;
-}
-#screen-start {
-  margin: 200px auto;
 }
 
 #img-start {
@@ -25,7 +24,7 @@ body {
 }
 button {
   color: #fdfdfd;
-  background-color: #d90429;
+
   border: 0;
   padding: 15px;
   border-radius: 8px;
@@ -34,7 +33,7 @@ button {
 }
 
 button:hover {
-  background-color: #ef233c;
+  background-color: #2ec4b6;
   cursor: pointer;
 }
 
@@ -45,6 +44,5 @@ button:hover {
 
 #btn-start {
   width: 150px;
+  background-color: #e71d36;
 }
-
-/*quizz page*/
