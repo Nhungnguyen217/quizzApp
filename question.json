@@ -1,0 +1,31 @@
+[
+  {
+    "question": "What does CSS stand for?",
+    "answers": [
+      { "text": "Creative Style Sheets", "correct": false },
+      { "text": "Computer Style Sheets", "correct": false },
+      { "text": "Colorful Style Sheets", "correct": false },
+      { "text": "Cascading Style Sheets", "correct": true }
+    ]
+  },
+
+  {
+    "question": "Which HTML attribute is used to define inline styles?",
+    "answers": [
+      { "text": "style", "correct": true },
+      { "text": "font", "correct": false },
+      { "text": "class", "correct": false },
+      { "text": "styles", "correct": false }
+    ]
+  },
+
+  {
+    "question": "Which property is used to change the background color?",
+    "answers": [
+      { "text": "bgcolor", "correct": false },
+      { "text": "color", "correct": false },
+      { "text": "background-color", "correct": true },
+      { "text": "color-background", "correct": false }
+    ]
+  }
+]

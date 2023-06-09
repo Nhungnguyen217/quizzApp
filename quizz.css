@@ -21,6 +21,9 @@ h2 {
   background-color: #ff9f1c;
 }
 
+.btn-answer:disabled {
+  cursor: no-drop;
+}
 #btn-next {
   display: block;
   margin-top: 30px;
@@ -30,4 +33,11 @@ h2 {
   width: 150px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.correct {
+  background-color: #2ec4b6;
+}
+.incorrect {
+  background-color: #e71d36;
 }
