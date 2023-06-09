@@ -1,34 +1,19 @@
-const questions = [
-  {
-    question: "What does CSS stand for?",
-    answers: [
-      { text: "Creative Style Sheets", correct: false },
-      { text: "Computer Style Sheets", correct: false },
-      { text: "Colorful Style Sheets", correct: false },
-      { text: "Cascading Style Sheets", correct: true },
-    ],
-  },
+const questions = [];
 
-  {
-    question: "Which HTML attribute is used to define inline styles?",
-    answers: [
-      { text: "style", correct: true },
-      { text: "font", correct: false },
-      { text: "class", correct: false },
-      { text: "styles", correct: false },
-    ],
-  },
-
-  {
-    question: "Which property is used to change the background color?",
-    answers: [
-      { text: "bgcolor", correct: false },
-      { text: "color", correct: false },
-      { text: "background-color", correct: true },
-      { text: "color-background", correct: false },
-    ],
-  },
-];
+//fetch API
+fetch("question.json")
+  .then((res) => {
+    return res.json();
+  })
+  .then((loadedQuestions) => {
+    console.log(loadedQuestions);
+    for (let i = 0; i < loadedQuestions.length; i++)
+      questions[i] = loadedQuestions[i];
+    start();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 const title = document.getElementById("title");
 const questionEl = document.getElementById("question");
@@ -39,11 +24,14 @@ console.log(title);
 
 let currQuesIndex = 0; //index hien tai trong mang questions
 let score = 0; //diem cua nguoi choi
+let timeStart, timeEnd;
 
 function start() {
   currQuesIndex = 0;
   score = 0;
   nextBtn.innerHTML = "Next";
+  timeStart = new Date();
+  console.log(timeStart);
   showQuestion();
 }
 
@@ -93,14 +81,17 @@ function selectAnswer(e) {
 }
 
 function showScore() {
+  timeEnd = new Date();
+  console.log(timeEnd);
+  let timeTotal = (timeEnd - timeStart) / 1000;
   resetState();
   if (score > 1) {
     //score >= 2 -> pass
-    questionEl.innerHTML = `Congratulation 🎉! You PASSED the quizz with score ${score} of ${questions.length}`;
+    questionEl.innerHTML = `Congratulation 🎉! You PASSED the quizz with time: ${timeTotal} seconds`;
   } else {
-    questionEl.innerHTML = `Sorry 😢 You FAILED the quizz with score: ${score} of ${questions.length}`;
+    questionEl.innerHTML = `Sorry 😢 You FAILED the quizz with time:  ${timeTotal} seconds`;
   }
-  title.textContent = "Score: " + score;
+  title.textContent = "Score: " + score + "/" + questions.length;
   nextBtn.innerHTML = "Play again";
 }
 
@@ -120,5 +111,3 @@ nextBtn.addEventListener("click", () => {
     start();
   }
 });
-
-start();
