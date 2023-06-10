@@ -78,7 +78,7 @@ function showQuestion() {
     button.innerHTML = element;
     button.classList.add("btn-answer");
     answerBtn.appendChild(button);
-    console.log(element === currQues.correct_answer);
+    // console.log(element === currQues.correct_answer);
     if (element === currQues.correct_answer) {
       button.dataset.correct_answer = currQues.correct_answer;
     }
