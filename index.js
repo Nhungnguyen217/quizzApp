@@ -1,55 +1,86 @@
 const questions = [];
 
 //fetch API
-fetch("question.json")
+fetch("https://opentdb.com/api.php?amount=5")
   .then((res) => {
     return res.json();
   })
   .then((loadedQuestions) => {
-    console.log(loadedQuestions);
-    for (let i = 0; i < loadedQuestions.length; i++)
-      questions[i] = loadedQuestions[i];
+    console.log(loadedQuestions.results);
+    for (var i = 0; i < loadedQuestions.results.length; i++) {
+      questions[i] = loadedQuestions.results[i];
+    }
     start();
   })
   .catch((err) => {
     console.log(err);
   });
 
+//DOM
 const title = document.getElementById("title");
 const questionEl = document.getElementById("question");
 const answerBtn = document.getElementById("answers-btn");
 const nextBtn = document.getElementById("btn-next");
 
-console.log(title);
-
 let currQuesIndex = 0; //index hien tai trong mang questions
 let score = 0; //diem cua nguoi choi
 let timeStart, timeEnd;
 
+//tao mang chua cac cau tra loi
+let listAnswerDB = [];
+let listAnswers = [];
+
+//nguoi choi bat dau
 function start() {
   currQuesIndex = 0;
   score = 0;
   nextBtn.innerHTML = "Next";
+  //bat dau tinh thoi gian
   timeStart = new Date();
-  console.log(timeStart);
+  console.log("Start at: " + timeStart);
   showQuestion();
 }
 
 function showQuestion() {
   resetState();
 
+  //hien thi cau hoi
   let currQues = questions[currQuesIndex];
   let quesNo = currQuesIndex + 1;
   title.textContent = "Question " + quesNo + "/" + questions.length;
   questionEl.innerHTML = quesNo + ". " + currQues.question;
+  //chuan bi cau tra loi
+  listAnswerDB.push(currQues.correct_answer);
+  for (let i = 0; i < currQues.incorrect_answers.length; i++) {
+    listAnswerDB.push(currQues.incorrect_answers[i]);
+  }
 
-  currQues.answers.forEach((answers) => {
+  //xao tron mang chua cac cau tra loi
+  function shuffle(array) {
+    var ctr = array.length,
+      temp,
+      index;
+    while (ctr > 0) {
+      index = Math.floor(Math.random() * ctr);
+      ctr--;
+      temp = array[ctr];
+      array[ctr] = array[index];
+      array[index] = temp;
+    }
+    return array;
+  }
+
+  listAnswers = shuffle(listAnswerDB);
+  console.log("Shuffled: " + listAnswers);
+
+  listAnswers.forEach((element) => {
     const button = document.createElement("button");
-    button.innerHTML = answers.text;
+    button.innerHTML = element;
     button.classList.add("btn-answer");
     answerBtn.appendChild(button);
-    if (answers.correct) {
-      button.dataset.correct = answers.correct;
+    console.log(element === currQues.correct_answer);
+    if (element === currQues.correct_answer) {
+      button.dataset.correct_answer = currQues.correct_answer;
     }
     button.addEventListener("click", selectAnswer);
   });
@@ -63,7 +94,12 @@ function resetState() {
 
 function selectAnswer(e) {
   const selectBtn = e.target;
-  const isCorrect = selectBtn.dataset.correct === "true";
+
+  const isCorrect =
+    selectBtn.dataset.correct_answer ===
+    questions[currQuesIndex].correct_answer;
+
+  console.log(isCorrect);
   if (isCorrect) {
     selectBtn.classList.add("correct");
     // alert("Correct");
@@ -82,7 +118,7 @@ function selectAnswer(e) {
 
 function showScore() {
   timeEnd = new Date();
-  console.log(timeEnd);
+  console.log("End at: " + timeEnd);
   let timeTotal = (timeEnd - timeStart) / 1000;
   resetState();
   if (score > 1) {
@@ -97,6 +133,9 @@ function showScore() {
 
 function handleNextBtn() {
   currQuesIndex++;
+  for (let i = 0; i < questions.length; i++) {
+    listAnswerDB.pop();
+  }
   if (currQuesIndex < questions.length) {
     showQuestion();
   } else {
