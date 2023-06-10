@@ -121,8 +121,8 @@ function showScore() {
   console.log("End at: " + timeEnd);
   let timeTotal = (timeEnd - timeStart) / 1000;
   resetState();
-  if (score > 1) {
-    //score >= 2 -> pass
+  if (score > 2) {
+    //score >= 3 -> pass
     questionEl.innerHTML = `Congratulation 🎉! You PASSED the quizz with time: ${timeTotal} seconds`;
   } else {
     questionEl.innerHTML = `Sorry 😢 You FAILED the quizz with time:  ${timeTotal} seconds`;
